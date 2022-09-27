@@ -1,9 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState('')
+
+  useEffect(() => {
+    setLoading(true)
+    axios.get('http://localhost:5000/who')
+      .then(({ data }) => {
+        setUser(data.user)
+      }).catch(console.log)
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <div className="App">
@@ -15,7 +27,8 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h2>Who created this {loading ? 'Loading...' : user}</h2>
+      <h2>Vite + React</h2>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
