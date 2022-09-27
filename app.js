@@ -1,15 +1,12 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const path = require('path')
 
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'frontend/dist')))
 
 
-app.get('/', (req, res) => {
-    res.json({
-        message: "working fine"
-    })
-})
 
 app.get("/who", (req, res) => {
     setTimeout(() => {
