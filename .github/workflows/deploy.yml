@@ -23,7 +23,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i
-    - run: cd frontend
-    - run: npm i 
-    - run: npm run build
+    - run: |
+        npm i
+        cd frontend
+        npm i 
+        npm run build
