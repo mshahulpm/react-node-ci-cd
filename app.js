@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'frontend/dist')))
 app.get("/who", (req, res) => {
     setTimeout(() => {
         res.json({
-            user: "Mohammed Shahul"
+            user: "Shahul"
         })
     }, 2000)
 })
