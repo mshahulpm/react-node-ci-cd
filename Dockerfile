@@ -1,10 +1,19 @@
-FROM node:13-alpine 
+FROM node:13-alpine as ui-build 
 
-COPY . .
+WORKDIR /app 
 
+COPY frontend ./frontend
+RUN cd frontend && npm i && npm run build 
+
+FROM node:13-alpine as api-build 
+
+WORKDIR /root/
+
+COPY --from=ui-build /app/frontend/dist ./frontend/dist 
+COPY package*.json ./ 
 RUN npm i 
-RUN cd frontend 
-RUN npm run build 
-RUN cd .. 
+COPY app.js ./
 
-CMD ["npm","start"] 
+EXPOSE 5000
+
+CMD ["node","app.js"] 
